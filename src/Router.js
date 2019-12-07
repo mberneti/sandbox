@@ -1,117 +1,90 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Form1 from "./views/Form1";
 import Home from "./views/Home";
+import HeapSort from "./views/HeapSort";
 import {
-  List,
-  ListSubheader,
-  ListItem,
-  ListItemText,
-  Collapse,
-  Grid,
   Container,
-  Typography
+  Typography,
+  AppBar,
+  Toolbar,
+  Button,
+  Link,
+  Box
 } from "@material-ui/core";
+import Menu from "./Menu";
 
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    flexGrow: 1
   },
-  nested: {
-    paddingLeft: theme.spacing(4)
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  title: {
+    flexGrow: 1
   }
 }));
 
 export default function App() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState("");
 
-  const handleClick = id => () => {
-    if (open === id) id = "";
-    setOpen(id);
+  const [drawer, setDrawerState] = React.useState(false);
+
+  const toggleDrawer = open => event => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState(open);
   };
-
-  const getSubMenu = (id, list) => (
-    <Collapse in={open === id} timeout="auto" unmountOnExit>
-      <List>
-        {list.map(x => (
-          <ListItem
-            button
-            component={Link}
-            to={x.path}
-            className={classes.nested}
-          >
-            <ListItemText primary={x.title} />
-          </ListItem>
-        ))}
-      </List>
-    </Collapse>
-  );
 
   return (
     <Router>
+      <Menu drawer={drawer} onClose={toggleDrawer(false)} />
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Berneti Projects
+          </Typography>
+          <Button
+            commponent={Link}
+            target="_blank"
+            href="https://github.com/mberneti/sandbox"
+            color="inherit"
+          >
+            Open On Github
+          </Button>
+        </Toolbar>
+      </AppBar>
       <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Typography variant="h1">MBerneti Sandbox</Typography>
-          </Grid>
-          <Grid item md={3}>
-            <List
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-              subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
-                  Topics
-                </ListSubheader>
-              }
-              className={classes.root}
-            >
-              <ListItem button onClick={handleClick("AdvancedAlgorithms")}>
-                <ListItemText primary="Advanced Algorithms" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              {getSubMenu("AdvancedAlgorithms", [
-                { path: "/Binomial-Heaps", title: "Binomial Heaps" }
-              ])}
-
-              <ListItem button onClick={handleClick("AdvancedOperatingSystem")}>
-                <ListItemText primary="Advanced Operating System" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              {getSubMenu("AdvancedOperatingSystem", [
-                { path: "/os1", title: "os1" }
-              ])}
-
-              <ListItem button onClick={handleClick("AdvancedCompiler")}>
-                <ListItemText primary="Advanced Compiler" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              {getSubMenu("AdvancedCompiler", [
-                { path: "/compiler1", title: "compiler1" }
-              ])}
-            </List>
-          </Grid>
-          <Grid item md={9}>
-            <Switch>
-              <Route path="/about">
-                <Form1 />
-              </Route>
-              <Route path="/users">
-                <h1> users</h1>
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </Grid>
-        </Grid>
+        <Box pt={5}>
+          <Switch>
+            <Route path="/Heap-Sort">
+              <HeapSort />
+            </Route>
+            <Route path="/">
+              <HeapSort />
+            </Route>
+          </Switch>
+        </Box>
       </Container>
     </Router>
   );

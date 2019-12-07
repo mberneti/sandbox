@@ -5,16 +5,12 @@ import { LinkVertical } from "@vx/shape";
 import { LinearGradient } from "@vx/gradient";
 
 import BinaryHeap from "../helpers/BinaryHeap";
-import { Grid, Box, Typography, Fab, Button, Paper } from "@material-ui/core";
-
-import ArrowLeft from "@material-ui/icons/ArrowLeft";
-import ArrowRight from "@material-ui/icons/ArrowRightAltOutlined";
+import { Grid, Box, Typography, Paper } from "@material-ui/core";
 
 const peach = "#fd9b93";
 const pink = "#fe6e9e";
 const blue = "#03c0dc";
 const green = "#26deb0";
-const rootColor = "#fe8a71";
 const lightpurple = "#3da4ab";
 const white = "#ffffff";
 const bg = "#4a4e4d";
