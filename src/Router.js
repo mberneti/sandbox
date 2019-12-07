@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-import Form1 from "./views/Form1";
 import Home from "./views/Home";
 import HeapSort from "./views/HeapSort";
 import {
@@ -48,7 +47,7 @@ export default function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/">
       <Menu drawer={drawer} onClose={toggleDrawer(false)} />
       <AppBar position="static">
         <Toolbar>
@@ -81,7 +80,7 @@ export default function App() {
               <HeapSort />
             </Route>
             <Route path="/">
-              <HeapSort />
+              <Home />
             </Route>
           </Switch>
         </Box>

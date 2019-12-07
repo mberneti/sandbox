@@ -69,24 +69,22 @@ export default function App(props) {
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         {getSubMenu("AdvancedAlgorithms", [
-          { path: "/Heap-Sort", title: "Heap Sort" },
-          { path: "/Binomial-Heaps", title: "Binomial Heaps" }
+          { path: "Heap-Sort", title: "Heap Sort" },
+          { path: "Binomial-Heaps", title: "Binomial Heaps" }
         ])}
 
         <ListItem button onClick={handleClick("AdvancedOperatingSystem")}>
           <ListItemText primary="Advanced Operating System" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        {getSubMenu("AdvancedOperatingSystem", [
-          { path: "/os1", title: "os1" }
-        ])}
+        {getSubMenu("AdvancedOperatingSystem", [{ path: "os1", title: "os1" }])}
 
         <ListItem button onClick={handleClick("AdvancedCompiler")}>
           <ListItemText primary="Advanced Compiler" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         {getSubMenu("AdvancedCompiler", [
-          { path: "/compiler1", title: "compiler1" }
+          { path: "compiler1", title: "compiler1" }
         ])}
       </List>
     </Drawer>
