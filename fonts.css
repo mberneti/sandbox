@@ -1,0 +1,36 @@
+
+  /* latin */
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src:  url('/content/fonts/OpenSans-Light.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: Shabnam;
+    src: url('/content/fonts/Shabnam.eot');
+    src: url('/content/fonts/Shabnam.eot?#iefix') format('embedded-opentype'),
+         url('/content/fonts/Shabnam.woff') format('woff'),
+         url('/content/fonts/Shabnam.ttf') format('truetype');
+    font-weight: normal;
+  }
+  
+  @font-face {
+    font-family: Shabnam;
+    src: url('/content/fonts/Shabnam-Bold.eot');
+    src: url('/content/fonts/Shabnam-Bold.eot?#iefix') format('embedded-opentype'),
+         url('/content/fonts/Shabnam-Bold.woff') format('woff'),
+         url('/content/fonts/Shabnam-Bold.ttf') format('truetype');
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: Shabnam;
+    src: url('/content/fonts/Shabnam-Light.eot');
+    src: url('/content/fonts/Shabnam-Light.eot?#iefix') format('embedded-opentype'),
+         url('/content/fonts/Shabnam-Light.woff') format('woff'),
+         url('/content/fonts/Shabnam-Light.ttf') format('truetype');
+    font-weight: 300;
+  }
+  
