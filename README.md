@@ -6,6 +6,6 @@
 Demo: [https://mberneti.github.io/sandbox/](https://mberneti.github.io/sandbox/)
 
 * Advanced-Algorithms
-  * Max Heap Insert
-  * Max Heapify
-  * Heap Sort
+  * [Max Heap Insert](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/Max-Heap-Insert)
+  * [Max Heapify](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/Max-Heapify)
+  * [Heap Sort](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/Heap-Sort)
