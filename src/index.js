@@ -1,12 +1,12 @@
 import React from "react";
+
+import { Provider } from "react-redux";
+import store from "./store/storeProvider";
 import ReactDOM from "react-dom";
 
 import * as serviceWorker from "./serviceWorker";
 
-import { Provider } from "react-redux";
-import store from "./store/storeProvider";
-
-import AppTheme from "AppTheme";
+import AppTheme from "./Layout/AppTheme";
 
 ReactDOM.render(
   <Provider store={store}>

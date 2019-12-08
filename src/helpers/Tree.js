@@ -1,5 +1,3 @@
-import { hierarchy } from "d3-hierarchy";
-
 function Node(val) {
   this.name = val;
   this.children = Array(2).fill(null);
@@ -22,16 +20,11 @@ Tree.prototype.getArrayTree = function(arr, i) {
 };
 
 Tree.prototype.getArrayHierarchy = function(arr) {
-  var jsonData = this.getArrayTree(arr);
-  return this.getHierarchy(jsonData);
-};
-
-Tree.prototype.getHierarchy = function(root) {
-  return hierarchy(root);
+  return this.getArrayTree(arr);
 };
 
 Tree.prototype.getRoot = function(arr, root, i) {
-  return this.getHierarchy(this.insertLevelOrder(arr, root, i));
+  return this.insertLevelOrder(arr, root, i);
 };
 
 Tree.prototype.insertLevelOrder = function(arr, root, i) {
