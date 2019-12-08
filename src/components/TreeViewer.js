@@ -165,7 +165,7 @@ export default props => {
               })}
               {tree
                 .descendants()
-                .filter(node => node.data.name)
+                .filter(node => node.data.name || node.data.name === 0)
                 .map((node, i) => {
                   return (
                     <Node

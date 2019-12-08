@@ -42,7 +42,7 @@ export default function App(props) {
             key={x.title}
             button
             component={Link}
-            to={x.path}
+            to={"/" + id + "/" + x.path}
             className={classes.nested}
           >
             <ListItemText primary={x.title} />
@@ -64,26 +64,30 @@ export default function App(props) {
         }
         className={classes.root}
       >
-        <ListItem button onClick={handleClick("AdvancedAlgorithms")}>
+        <ListItem button onClick={handleClick("Advanced-Algorithms")}>
           <ListItemText primary="Advanced Algorithms" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        {getSubMenu("AdvancedAlgorithms", [
+        {getSubMenu("Advanced-Algorithms", [
+          { path: "Max-Heap-Insert", title: "Max Heap Insert" },
+          { path: "Max-Heapify", title: "Max Heapify" },
           { path: "Heap-Sort", title: "Heap Sort" },
           { path: "Binomial-Heaps", title: "Binomial Heaps" }
         ])}
 
-        <ListItem button onClick={handleClick("AdvancedOperatingSystem")}>
+        <ListItem button onClick={handleClick("Advanced-OperatingSystem")}>
           <ListItemText primary="Advanced Operating System" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        {getSubMenu("AdvancedOperatingSystem", [{ path: "os1", title: "os1" }])}
+        {getSubMenu("Advanced-OperatingSystem", [
+          { path: "os1", title: "os1" }
+        ])}
 
-        <ListItem button onClick={handleClick("AdvancedCompiler")}>
+        <ListItem button onClick={handleClick("Advanced-Compiler")}>
           <ListItemText primary="Advanced Compiler" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        {getSubMenu("AdvancedCompiler", [
+        {getSubMenu("Advanced-Compiler", [
           { path: "compiler1", title: "compiler1" }
         ])}
       </List>

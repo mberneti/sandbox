@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Grid, Box, Typography, Paper } from "@material-ui/core";
 
-import HeapSortHelper from "../helpers/HeapSortHelper";
 import TreeViewer from "../components/TreeViewer";
 
 import * as mathHelper from "../helpers/MathHelper";
+import MaxHeapifyHelper from "../helpers/MaxHeapifyHelper";
 
 export default () => {
   const [data, setData] = React.useState();
@@ -28,7 +28,7 @@ export default () => {
   };
 
   function componentDidMount() {
-    var heap = new HeapSortHelper();
+    var heap = new MaxHeapifyHelper();
 
     var sampleArray = mathHelper.shuffle(10, 100); //[83, 26, 51, 54, 41, 88, 37, 0, 49, 57]; //shuffle();
 
@@ -48,7 +48,7 @@ export default () => {
 
   return (
     <Grid container alignItems="center" justify="space-around">
-      <Grid item xs={6}>
+      <Grid item xs={2} justify="center">
         <Typography variant="h3" display="inline">
           {activeIndex}
         </Typography>
@@ -72,12 +72,6 @@ export default () => {
                 root={x.root}
               />
             ))}
-      </Grid>
-      <Grid item xs={6}>
-        {data &&
-          data.history
-            .filter((log, idx) => idx === activeIndex)
-            .map(log => <TreeViewer logLabel={"Output"} root={log.output} />)}
       </Grid>
       <Grid item xs={12}>
         <Box textAlign="center">
