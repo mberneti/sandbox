@@ -37,13 +37,17 @@ FCFSScheduler.prototype = {
         .filter((x, i) => x.state === processState.IsReady)
         .sort((first, second) => first.arrivalTime - second.arrivalTime)[0];
 
-      this.updateState(bestProcess.id, processState.IsActive);
-
-      this.cpuProcessId = bestProcess.id;
+      if (bestProcess) {
+        this.updateState(bestProcess.id, processState.IsActive);
+        this.cpuProcessId = bestProcess.id;
+        this.log(`Context Switch`);
+      } else if (this.cpuProcessId != null) {
+        this.cpuProcessId = null;
+      }
     } else {
       this.cpuProcessId = null;
+      this.log(`Context Switch`);
     }
-    this.log(`Context Switch`);
   },
   checkCpuState: function() {
     if (this.cpuProcessId !== null) {
@@ -57,7 +61,7 @@ FCFSScheduler.prototype = {
     }
   },
   updateReadyQueue: function() {
-    const ATBiggerThanCounter = x => x.arrivalTime >= this.counter;
+    const ATBiggerThanCounter = x => x.arrivalTime <= this.counter;
     const isNotArrived = x => x.state === processState.IsNotArrived;
 
     this.tasks = this.tasks.map(x => {
@@ -65,6 +69,8 @@ FCFSScheduler.prototype = {
         x.state = processState.IsReady;
       return x;
     });
+
+    this.log(`Update Ready Queue`);
   },
   inCreaseCounter: function() {
     this.counter++;
@@ -78,14 +84,13 @@ FCFSScheduler.prototype = {
     });
     this.log(`Increase Counter`);
   },
-  checkState: function() {
-    this.log(`Check State: ` + this.counter);
-  },
   schdule: function(params) {
     while (this.hasNotCompleted()) {
       this.updateReadyQueue();
 
       this.checkCpuState();
+
+      if (!this.hasNotCompleted()) break;
 
       this.inCreaseCounter();
     }
@@ -95,7 +100,13 @@ FCFSScheduler.prototype = {
     if (this.cpuProcessId) cpu = this.get(this.cpuProcessId);
 
     let temp = this.tasks.map(x => ({ ...x }));
-    this.history.push({ label, tasks: temp, cpu: cpu && { ...cpu } });
+
+    this.history.push({
+      label,
+      counter: this.counter,
+      tasks: temp,
+      cpu: cpu && { ...cpu }
+    });
   },
   getLogs: function() {
     this.log(`start`);

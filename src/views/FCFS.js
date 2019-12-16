@@ -12,7 +12,6 @@ import {
 import ProcessTable from "../components/ProcessTable";
 import ProcessList from "../components/ProcessList";
 
-import * as mathHelper from "../helpers/MathHelper";
 import FCFSScheduler, { processState } from "../helpers/FCFSScheduler";
 import { withStyles } from "@material-ui/styles";
 
@@ -26,36 +25,47 @@ export default () => {
   const [userInput, setUserInput] = React.useState([
     { arrivalTime: 0, burstTime: 2 },
     { arrivalTime: 0, burstTime: 2 },
-    { arrivalTime: 2, burstTime: 2 }
+    { arrivalTime: 10, burstTime: 2 }
   ]);
 
   const updateInputHandler = data => {
     setUserInput(data);
   };
 
+  const [lastClickKeyCode, setLastClickKeyCode] = React.useState();
   const [data, setData] = React.useState();
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyPress(data));
+    if (!data) return;
+    if (!lastClickKeyCode) return;
+    if (lastClickKeyCode.keyCode === 39) {
+      setActiveIndex(x => (x + 1 >= data.logs.length ? x : x + 1));
+    } else if (lastClickKeyCode.keyCode === 37) {
+      setActiveIndex(x => (x - 1 < 0 ? x : x - 1));
+    }
+    setLastClickKeyCode(null);
+  }, [lastClickKeyCode]);
+
+  useEffect(() => {
+    setActiveIndex(0);
   }, [data]);
 
   useEffect(() => {
-    componentDidMount();
-    alert("asd");
+    var scheduler = new FCFSScheduler(userInput);
+
+    setData({
+      logs: scheduler.getLogs()
+    });
   }, [userInput]);
 
   useEffect(() => {
     componentDidMount();
   }, []);
 
-  const handleKeyPress = data => e => {
-    if (!data) return;
-    if (e.keyCode === 39) {
-      setActiveIndex(x => (x + 1 >= data.logs.length ? x : x + 1));
-    } else if (e.keyCode === 37) {
-      setActiveIndex(x => (x - 1 < 0 ? x : x - 1));
-    }
+  const handleKeyPress = e => {
+    if (e.keyCode === 39 || e.keyCode === 37)
+      setLastClickKeyCode({ keyCode: e.keyCode, date: new Date() });
   };
 
   function componentDidMount() {
@@ -64,9 +74,15 @@ export default () => {
     setData({
       logs: scheduler.getLogs()
     });
+
+    document.addEventListener("keydown", handleKeyPress);
   }
 
-  const cpuProcess = data && data.logs[activeIndex].cpu;
+  const getLog = (index, prop) =>
+    data && index < data.logs.length && data.logs[index][prop];
+
+  const cpuProcess = getLog(activeIndex, "cpu");
+
   let cpuWaitingTime = "";
   let cpuCompleted = 0;
   if (cpuProcess) {
@@ -81,7 +97,7 @@ export default () => {
           {activeIndex}
         </Typography>
         <Typography variant="h5" display="inline">
-          {data && data.logs[activeIndex].label}
+          {getLog(activeIndex, "label")}
         </Typography>
       </Grid>
       <Grid item xs={8}>
@@ -93,14 +109,16 @@ export default () => {
         </Paper>
       </Grid>
       <Grid item xs={4}>
-        <ProcessTable value={userInput} onChange={setUserInput} />
+        <ProcessTable value={userInput} onChange={updateInputHandler} />
       </Grid>
       <Grid item xs={8}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper>
               <Box p={2}>
-                <Typography variant="h6">CPU</Typography>
+                <Typography variant="h6">
+                  CPU ({getLog(activeIndex, "counter")})
+                </Typography>
                 {cpuProcess && (
                   <>
                     <Chip
@@ -124,12 +142,9 @@ export default () => {
               <Box p={2}>
                 <Typography variant="h6">Ready Queue</Typography>
                 <ProcessList
-                  list={
-                    data &&
-                    data.logs[activeIndex].tasks.filter(
-                      x => x.state === processState.IsReady
-                    )
-                  }
+                  list={(getLog(activeIndex, "tasks") || []).filter(
+                    x => x.state === processState.IsReady
+                  )}
                 />
               </Box>
             </Paper>
@@ -140,17 +155,47 @@ export default () => {
                 <Typography variant="h6">Completed</Typography>
                 <ProcessList
                   isCompleted
-                  list={
-                    data &&
-                    data.logs[activeIndex].tasks.filter(
-                      x => x.state === processState.IsCompleted
-                    )
-                  }
+                  list={(getLog(activeIndex, "tasks") || []).filter(
+                    x => x.state === processState.IsCompleted
+                  )}
                 />
               </Box>
             </Paper>
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Paper>
+          <Box p={2}>
+            <Box pb={2}>
+              <Typography variant="h6">Gantt Chart</Typography>
+            </Box>
+            <Grid container>
+              {((data && data.logs) || [])
+                .filter(
+                  x =>
+                    x.label === `Increase Counter` &&
+                    x.counter <= getLog(activeIndex, "counter")
+                )
+                .map(x => (
+                  <Grid item>
+                    <Box
+                      style={{
+                        backgroundColor: x.cpu && x.cpu.color,
+                        border: "1px solid gray"
+                      }}
+                      display="inline"
+                      p={1.5}
+                    >
+                      {x.cpu && x.cpu.id}
+                    </Box>
+                    <Box mt={1.5}>{x.counter}</Box>
+                  </Grid>
+                ))}
+            </Grid>
+          </Box>
+        </Paper>
       </Grid>
     </Grid>
   );

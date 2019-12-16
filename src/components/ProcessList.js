@@ -24,7 +24,7 @@ export default props => {
         <React.Fragment>
           <Chip
             avatar={<Avatar>{x.id}</Avatar>}
-            label={`W.T : ${x.arrivalTime}`}
+            label={`W.T : ${x.waitingTime}`}
             style={{
               marginBottom: 8,
               marginTop: 8,
