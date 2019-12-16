@@ -16,4 +16,4 @@ Demo: [https://mberneti.github.io/sandbox/](https://mberneti.github.io/sandbox/)
   
   
 * Advanced Operating System
-  * [FCFS](https://mberneti.github.io/sandbox/#/Advanced-OperatingSystem/FCFS)
+  * [FCFS CPU Scheduling](https://mberneti.github.io/sandbox/#/Advanced-OperatingSystem/FCFS)
