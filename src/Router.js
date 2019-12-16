@@ -9,6 +9,7 @@ import Home from "./views/Home";
 import HeapSort from "./views/HeapSort";
 import MaxHeapInsert from "views/MaxHeapInsert";
 import MaxHeapify from "views/MaxHeapify";
+import FCFS from "views/FCFS";
 
 export default function App() {
   const [drawer, setDrawerState] = React.useState(false);
@@ -51,6 +52,9 @@ export default function App() {
       <Container>
         <Box pt={1}>
           <Switch>
+            <Route path="/Advanced-OperatingSystem/FCFS">
+              <FCFS />
+            </Route>
             <Route path="/Advanced-Algorithms/Max-Heap-Insert">
               <MaxHeapInsert />
             </Route>

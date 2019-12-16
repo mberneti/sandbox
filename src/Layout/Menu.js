@@ -80,7 +80,7 @@ export default function App(props) {
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         {getSubMenu("Advanced-OperatingSystem", [
-          { path: "os1", title: "os1" }
+          { path: "FCFS", title: "FCFS" }
         ])}
 
         <ListItem button onClick={handleClick("Advanced-Compiler")}>
