@@ -16,6 +16,11 @@ const ItemBorderLinearProgress = withStyles({
   }
 })(LinearProgress);
 
+const getLabel = (x, isCompletedList) =>
+  isCompletedList
+    ? `W.T : ${x.waitingTime}  T.A.T : ${x.waitingTime + x.burstTime}`
+    : `W.T : ${x.waitingTime}`;
+
 export default props => {
   //leafs
   return (
@@ -24,7 +29,7 @@ export default props => {
         <React.Fragment>
           <Chip
             avatar={<Avatar>{x.id}</Avatar>}
-            label={`W.T : ${x.waitingTime}`}
+            label={getLabel(x, props.isCompleted)}
             style={{
               marginBottom: 8,
               marginTop: 8,

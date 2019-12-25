@@ -5,7 +5,7 @@ export const processState = {
   IsCompleted: "IsCompleted" // completed
 };
 
-function FCFSScheduler(tasks) {
+function RoundRobinScheduler(tasks) {
   //{arrivalTime,burstTime,waitingTime=0, state:'',excutionDuration:''}
   this.tasks = tasks.map((x, i) => {
     x.id = "P" + (i + 1);
@@ -15,13 +15,14 @@ function FCFSScheduler(tasks) {
     return x;
   });
 
+  this.roundRobinCounter = -1;
   this.counter = 0;
   this.cpuProcessId = null;
   this.history = [];
   this.contextSwitch = 0;
 }
 
-FCFSScheduler.prototype = {
+RoundRobinScheduler.prototype = {
   get: function(id) {
     return this.tasks.find(x => x.id === id);
   },
@@ -34,23 +35,32 @@ FCFSScheduler.prototype = {
   },
   setBestCandidate: function() {
     if (this.hasNotCompleted()) {
+      this.roundRobinCounter++;
+
+      if (
+        this.roundRobinCounter >=
+        this.tasks.filter((x, i) => x.state === processState.IsReady).length
+      ) {
+        this.roundRobinCounter = 0;
+      }
+
       const bestProcess = this.tasks
         .filter((x, i) => x.state === processState.IsReady)
-        .sort((first, second) => first.arrivalTime - second.arrivalTime)[0];
+        .sort((first, second) => first.arrivalTime - second.arrivalTime)[
+        this.roundRobinCounter
+      ];
 
       if (bestProcess) {
         const isSwitched = this.cpuProcessId !== bestProcess.id;
-        if (isSwitched) this.contextSwitch++;
-
         this.updateState(bestProcess.id, processState.IsActive);
         this.cpuProcessId = bestProcess.id;
         this.log(`Context Switch`);
+        if (isSwitched) this.contextSwitch++;
       } else if (this.cpuProcessId != null) {
-        this.contextSwitch++;
         this.cpuProcessId = null;
+        this.log(`Context Switch`);
       }
     } else {
-      if (this.cpuProcessId !== null) this.contextSwitch++;
       this.cpuProcessId = null;
       this.log(`Context Switch`);
     }
@@ -61,17 +71,20 @@ FCFSScheduler.prototype = {
       if (currentCpuProcess.burstTime === currentCpuProcess.executionDuration) {
         this.updateState(this.cpuProcessId, processState.IsCompleted);
         this.setBestCandidate();
+      } else {
+        this.updateState(this.cpuProcessId, processState.IsReady);
+        this.setBestCandidate();
       }
     } else {
       this.setBestCandidate();
     }
   },
   updateReadyQueue: function() {
-    const ATBiggerThanCounter = x => x.arrivalTime <= this.counter;
+    const arrivalTimeBiggerThanCounter = x => x.arrivalTime <= this.counter;
     const isNotArrived = x => x.state === processState.IsNotArrived;
 
     this.tasks = this.tasks.map(x => {
-      if (ATBiggerThanCounter(x) && isNotArrived(x))
+      if (arrivalTimeBiggerThanCounter(x) && isNotArrived(x))
         x.state = processState.IsReady;
       return x;
     });
@@ -90,7 +103,7 @@ FCFSScheduler.prototype = {
     });
     this.log(`Increase Counter`);
   },
-  schdule: function(params) {
+  schdule: function() {
     while (this.hasNotCompleted()) {
       this.updateReadyQueue();
 
@@ -120,6 +133,8 @@ FCFSScheduler.prototype = {
     this.avarageTurnAroundTimeTotal = turnAroundTimeTotal / tasksCount;
   },
   log: function(label) {
+    // if (label === `Context Switch`) this.contextSwitch++;
+
     let cpu = null;
     if (this.cpuProcessId) cpu = this.get(this.cpuProcessId);
 
@@ -154,4 +169,4 @@ FCFSScheduler.prototype = {
   }
 };
 
-export default FCFSScheduler;
+export default RoundRobinScheduler;

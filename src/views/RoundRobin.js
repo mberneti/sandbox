@@ -12,7 +12,9 @@ import {
 import ProcessTable from "../components/ProcessTable";
 import ProcessList from "../components/ProcessList";
 
-import FCFSScheduler, { processState } from "../helpers/FCFSScheduler";
+import RoundRobinScheduler, {
+  processState
+} from "../helpers/RoundRobinScheduler";
 import { withStyles } from "@material-ui/styles";
 
 export default () => {
@@ -52,7 +54,7 @@ export default () => {
   }, [data]);
 
   useEffect(() => {
-    var scheduler = new FCFSScheduler(userInput);
+    var scheduler = new RoundRobinScheduler(userInput);
 
     setData({
       logs: scheduler.getLogs(),
@@ -70,7 +72,7 @@ export default () => {
   };
 
   function componentDidMount() {
-    var scheduler = new FCFSScheduler(userInput);
+    var scheduler = new RoundRobinScheduler(userInput);
 
     setData({
       logs: scheduler.getLogs(),
@@ -199,7 +201,6 @@ export default () => {
                 ))}
             </Grid>
           </Box>
-
           {data && data.info && (
             <Box m={2} p={2}>
               <p>CPU utilization = {data.info.CPUUtilization}</p>

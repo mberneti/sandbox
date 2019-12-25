@@ -10,6 +10,7 @@ import HeapSort from "./views/HeapSort";
 import MaxHeapInsert from "views/MaxHeapInsert";
 import MaxHeapify from "views/MaxHeapify";
 import FCFS from "views/FCFS";
+import RoundRobin from "views/RoundRobin";
 
 export default function App() {
   const [drawer, setDrawerState] = React.useState(false);
@@ -54,6 +55,9 @@ export default function App() {
           <Switch>
             <Route path="/Advanced-OperatingSystem/FCFS">
               <FCFS />
+            </Route>
+            <Route path="/Advanced-OperatingSystem/Round-Robin">
+              <RoundRobin />
             </Route>
             <Route path="/Advanced-Algorithms/Max-Heap-Insert">
               <MaxHeapInsert />
