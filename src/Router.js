@@ -12,6 +12,9 @@ import MaxHeapify from "views/MaxHeapify";
 import FCFS from "views/FCFS";
 import RoundRobin from "views/RoundRobin";
 
+import LUDecomposition from "views/LUDecomposition";
+import Simplex from "views/Simplex";
+
 export default function App() {
   const [drawer, setDrawerState] = React.useState(false);
 
@@ -67,6 +70,12 @@ export default function App() {
             </Route>
             <Route path="/Advanced-Algorithms/Heap-Sort">
               <HeapSort />
+            </Route>
+            <Route path="/Advanced-Algorithms/LU-Decomposition">
+              <LUDecomposition />
+            </Route>
+            <Route path="/Advanced-Algorithms/Simplex">
+              <Simplex />
             </Route>
             <Route path="/">
               <Home />

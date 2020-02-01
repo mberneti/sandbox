@@ -69,11 +69,14 @@ export default function App(props) {
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         {getSubMenu("Advanced-Algorithms", [
+          { path: "LU-Decomposition", title: "LU Decomposition" },
+          { path: "Max-Heap-Insert", title: "Max Heap Insert" },
           { path: "Max-Heap-Insert", title: "Max Heap Insert" },
           { path: "Max-Heapify", title: "Max Heapify" },
           { path: "Heap-Sort", title: "Heap Sort" },
           { path: "Binomial-Heaps", title: "Binomial Heaps" }
         ])}
+        {/* { path: "Simplex", title: "Simplex" }, */}
 
         <ListItem button onClick={handleClick("Advanced-OperatingSystem")}>
           <ListItemText primary="Advanced Operating System" />
