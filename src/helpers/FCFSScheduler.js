@@ -113,7 +113,7 @@ FCFSScheduler.prototype = {
     }
 
     const tasksCount = this.tasks.length;
-
+    console.log(tasksCount, this.counter);
     this.Throughput = tasksCount / this.counter;
     this.CPUUtilization = this.counter / totalBurstTime;
     this.avarageWaitingTime = waitingTimeTotal / tasksCount;
