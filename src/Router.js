@@ -13,7 +13,7 @@ import FCFS from "views/FCFS";
 import RoundRobin from "views/RoundRobin";
 
 import LUDecomposition from "views/LUDecomposition";
-import Simplex from "views/Simplex";
+import FFT from "views/FFT";
 
 export default function App() {
   const [drawer, setDrawerState] = React.useState(false);
@@ -74,8 +74,8 @@ export default function App() {
             <Route path="/Advanced-Algorithms/LU-Decomposition">
               <LUDecomposition />
             </Route>
-            <Route path="/Advanced-Algorithms/Simplex">
-              <Simplex />
+            <Route path="/Advanced-Algorithms/FFT">
+              <FFT />
             </Route>
             <Route path="/">
               <Home />
