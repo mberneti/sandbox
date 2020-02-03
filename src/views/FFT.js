@@ -25,11 +25,9 @@ function computeDft(input, step) {
   inimag.fill(0);
 
   for (var k = 0; k < n; k++) {
-    // For each output element
     var sumreal = 0;
     var sumimag = 0;
     for (var t = 0; t < n; t++) {
-      // For each input element
       var angle = (2 * Math.PI * t * k) / n;
       sumreal += inreal[t] * Math.cos(angle) + inimag[t] * Math.sin(angle);
       sumimag += -inreal[t] * Math.sin(angle) + inimag[t] * Math.cos(angle);
