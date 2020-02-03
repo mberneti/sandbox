@@ -4,9 +4,9 @@ Demo: [https://mberneti.github.io/sandbox/](https://mberneti.github.io/sandbox/)
 
 
 * Advanced Algorithms
-  * [LU Decomposition](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/LU-Decomposition)
+  * [LU Decomposition or LU Factorization](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/LU-Decomposition)
     ![Max Heap Sample Image](https://github.com/mberneti/sandbox/blob/master/public/content/images/LU.PNG?raw=true)
-  * [FFT](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/FFT)
+  * [Discrete Fourier Transform (DFT) - Fast Fourier Transform (FFT)](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/FFT)
     ![Max Heap Sample Image](https://github.com/mberneti/sandbox/blob/master/public/content/images/FFT.png?raw=true)
   * [Max Heap Insert](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/Max-Heap-Insert)
   * [Max Heapify](https://mberneti.github.io/sandbox/#/Advanced-Algorithms/Max-Heapify)
